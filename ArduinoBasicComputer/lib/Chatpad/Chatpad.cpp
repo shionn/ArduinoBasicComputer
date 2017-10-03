@@ -284,12 +284,80 @@ static const char kAsciiTable_Shifted[] PROGMEM = {
   0, /* 78 Unused */
 };
 
+static const char kAsciiTable_Orange[] PROGMEM = {
+  0, /* 11 Key7 */
+  0, /* 12 Key6 */
+  0, /* 13 Key5 */
+  0, /* 14 Key4 */
+  0, /* 15 Key3 */
+  0, /* 16 Key2 */
+  0, /* 17 Key1 */
+  0, /* 18 Unused */
+
+  0, /* 21 KeyU */
+  0, /* 22 KeyY */
+  0, /* 23 KeyT */
+  '"', /* 24 KeyR */
+  0, /* 25 KeyE */
+  0, /* 26 KeyZ */
+  0, /* 27 KeyA */
+  0, /* 28 Unused */
+
+  0, /* 31 KeyJ */
+  0, /* 32 KeyH */
+  0, /* 33 KeyG */
+  0, /* 34 KeyF */
+  0, /* 35 KeyD */
+  0, /* 36 KeyS */
+  0, /* 37 KeyQ */
+  0, /* 38 Unused */
+
+  0, /* 41 KeyN */
+  0, /* 42 KeyB */
+  0, /* 43 KeyV */
+  0, /* 44 KeyC */
+  0, /* 45 KeyX */
+  0, /* 46 KeyW */
+  0, /* 47 Unused */
+  0, /* 48 Unused */
+
+  0, /* 51 KeyRight */
+  0, /* 52 KeyComma */
+  0, /* 53 KeyPeriod */
+  0, /* 54 KeySpace */
+  0, /* 55 KeyLeft */
+  0, /* 56 Unused */
+  0, /* 57 Unused */
+  0, /* 58 Unused */
+
+  0, /* 61 Unused */
+  0, /* 62 KeyM */
+  '\n', /* 63 KeyEnter */
+  0, /* 64 KeyP */
+  0, /* 65 Key0 */
+  0, /* 66 Key9 */
+  0, /* 67 Key8 */
+  0, /* 68 Unused */
+
+  '\b', /* 71 KeyBackspace */
+  0, /* 72 KeyL */
+  0, /* 73 Unused */
+  0, /* 74 Unused */
+  0, /* 75 KeyO */
+  0, /* 76 KeyI */
+  0, /* 77 KeyK */
+  0, /* 78 Unused */
+};
+
+
 char Chatpad::toAscii(keycode_t code) {
   byte index = (((code - 0x11) & 0x70) >> 1) | ((code - 0x11) & 0x7);
   if (index >= sizeof(kAsciiTable)) return 0;
 
   if (isShiftDown()) {
     return pgm_read_byte_near(kAsciiTable_Shifted + index);
+  } else if (isOrangeCircleDown()){
+    return pgm_read_byte_near(kAsciiTable_Orange + index);
   } else {
     return pgm_read_byte_near(kAsciiTable + index);
   }
