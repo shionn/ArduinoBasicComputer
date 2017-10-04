@@ -169,8 +169,8 @@ static const char kAsciiTable[] PROGMEM = {
   't', /* 23 KeyT */
   'r', /* 24 KeyR */
   'e', /* 25 KeyE */
-  'z', /* 26 KeyW */
-  'a', /* 27 KeyQ */
+  'z', /* 26 KeyZ */
+  'a', /* 27 KeyA */
   0, /* 28 Unused */
 
   'j', /* 31 KeyJ */
@@ -179,7 +179,7 @@ static const char kAsciiTable[] PROGMEM = {
   'f', /* 34 KeyF */
   'd', /* 35 KeyD */
   's', /* 36 KeyS */
-  'q', /* 37 KeyA */
+  'q', /* 37 KeyQ */
   0, /* 38 Unused */
 
   'n', /* 41 KeyN */
@@ -187,12 +187,12 @@ static const char kAsciiTable[] PROGMEM = {
   'v', /* 43 KeyV */
   'c', /* 44 KeyC */
   'x', /* 45 KeyX */
-  'w', /* 46 KeyZ */
+  'w', /* 46 KeyW */
   0, /* 47 Unused */
   0, /* 48 Unused */
 
   0, /* 51 KeyRight */
-  ',', /* 52 KeyM */
+  ',', /* 52 KeyComma */
   '.', /* 53 KeyPeriod */
   ' ', /* 54 KeySpace */
   0, /* 55 KeyLeft */
@@ -201,7 +201,7 @@ static const char kAsciiTable[] PROGMEM = {
   0, /* 58 Unused */
 
   0, /* 61 Unused */
-  'm', /* 62 KeyComma */
+  'm', /* 62 KeyM */
   '\n', /* 63 KeyEnter */
   'p', /* 64 KeyP */
   '0', /* 65 Key0 */
@@ -234,8 +234,8 @@ static const char kAsciiTable_Shifted[] PROGMEM = {
   'T', /* 23 KeyT */
   'R', /* 24 KeyR */
   'E', /* 25 KeyE */
-  'W', /* 26 KeyW */
-  'Q', /* 27 KeyQ */
+  'Z', /* 26 KeyZ */
+  'A', /* 27 KeyA */
   0, /* 28 Unused */
 
   'J', /* 31 KeyJ */
@@ -244,7 +244,7 @@ static const char kAsciiTable_Shifted[] PROGMEM = {
   'F', /* 34 KeyF */
   'D', /* 35 KeyD */
   'S', /* 36 KeyS */
-  'A', /* 37 KeyA */
+  'Q', /* 37 KeyQ */
   0, /* 38 Unused */
 
   'N', /* 41 KeyN */
@@ -252,12 +252,12 @@ static const char kAsciiTable_Shifted[] PROGMEM = {
   'V', /* 43 KeyV */
   'C', /* 44 KeyC */
   'X', /* 45 KeyX */
-  'Z', /* 46 KeyZ */
+  'W', /* 46 KeyW */
   0, /* 47 Unused */
   0, /* 48 Unused */
 
   0, /* 51 KeyRight */
-  'M', /* 52 KeyM */
+  0, /* 52 KeyComma */
   '>', /* 53 KeyPeriod */
   ' ', /* 54 KeySpace */
   0, /* 55 KeyLeft */
@@ -266,7 +266,7 @@ static const char kAsciiTable_Shifted[] PROGMEM = {
   0, /* 58 Unused */
 
   0, /* 61 Unused */
-  '<', /* 62 KeyComma */
+  'M', /* 62 KeyM */
   '\n', /* 63 KeyEnter */
   'P', /* 64 KeyP */
   ')', /* 65 Key0 */
