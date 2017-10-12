@@ -7,7 +7,6 @@
 
 // CS ou SS ou CHIP SELECT : RS
 #define CS 10
-
 // DATA ou MOSI : R/W
 #define DATA 11
 // CLOCK, E
