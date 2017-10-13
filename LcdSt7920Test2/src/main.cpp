@@ -1,5 +1,7 @@
 #include <Arduino.h>
 
+#define __SPI__ 1
+
 #ifdef __SPI__
 #include <SPI.h>
 #endif
@@ -11,32 +13,28 @@
 // CLOCK, E
 #define CLOCK 13
 
-#define DELAI 100000
+#define DELAI 1
+
 
 void clock() {
   digitalWrite(CLOCK, HIGH);
-  delayMicroseconds(DELAI);
   digitalWrite(CLOCK, LOW);
-  delayMicroseconds(DELAI);
 }
 
 void writeWord(uint8_t data) {
+  #ifdef __SPI__
+  SPI.transfer(data);
+  #else
   for (int i=0; i<8; i++) {
     digitalWrite(DATA, (data & 0b10000000) != 0 );
-    delayMicroseconds(DELAI);
     clock();
     data = (uint8_t)(data << 1);
   }
+  #endif
 }
 
 
 void write(uint8_t data) {
-  Serial.print(data , BIN);
-  Serial.print(' ');
-  Serial.print(data & 0b11110000, BIN);
-  Serial.print(' ');
-  Serial.println((uint8_t)(data << 4), BIN);
-
   #ifdef __SPI__
   SPI.transfer(data & 0b11110000);
   SPI.transfer((uint8_t)(data << 4));
@@ -47,7 +45,7 @@ void write(uint8_t data) {
 }
 
 #ifdef __SPI__
-SPISettings setting = SPISettings(1, MSBFIRST, SPI_MODE2);
+SPISettings setting = SPISettings(1000000, MSBFIRST, SPI_MODE3);
 #endif
 
 
@@ -66,48 +64,57 @@ void setup() {
   SPI.beginTransaction(setting);
   #endif
   writeWord(0b11111000); // synchro 11111 RW RS 0
+  write(0b00000001); // clear
+  delay(2);
+  write(0b00001100); // display on, no cursor no blink
+  delayMicroseconds(DELAI);
+  write(0b00110100); // 8bit extend
+  delayMicroseconds(DELAI);
+  write(0b00110110); // 8bit extend mode graphic
+  delayMicroseconds(DELAI);
 
-  write(0b00110010); // function set (8 bit
-  write(0b00110110); // function set (extend instr. set
-  write(0b00110110); // function set (grafika ON
-  write(0b00000010); // enable CGRAM po prenastaveni do BASIC instr
   #ifdef __SPI__
   SPI.endTransaction();
   #endif
-//  SPI.end();
   digitalWrite(CS, LOW);
+  delayMicroseconds(DELAI);
+}
 
-  delay(100);
-
+void locate(int y){
   digitalWrite(CS, HIGH);
   #ifdef __SPI__
   SPI.beginTransaction(setting);
   #endif
   writeWord(0b11111000); // synchro 11111 RW RS 0
-  write(0b10000000+2); // y=0
-  write(0b10000000+4); // x=0
+  write(0b10000000+y);
+  write(0b10000000); // x=0
   #ifdef __SPI__
   SPI.endTransaction();
   #endif
   digitalWrite(CS, LOW);
-  delay(1000);
+  delayMicroseconds(DELAI);
 }
 
+int y=0;
 void loop() {
 
+  locate(y);
+  y++;
+  if (y==32) y=0;
 
   digitalWrite(CS, HIGH);
   #ifdef __SPI__
   SPI.beginTransaction(setting);
   #endif
   writeWord(0b11111010); // synchro 11111 RW RS 0
-  write(0b10101010);
-  write(0b10101010);
+  for (int x=0;x<32;x++)
+    write(0b00110011);
   #ifdef __SPI__
   SPI.endTransaction();
   #endif
   digitalWrite(CS, LOW);
-  delay(1000);
+  delayMicroseconds(DELAI);
 
+  //delay(1000);
 
 }
