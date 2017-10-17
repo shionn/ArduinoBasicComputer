@@ -95,12 +95,9 @@ void locate(int y){
   delayMicroseconds(DELAI);
 }
 
-int y=0;
+uint8_t y=0;
 void loop() {
-
   locate(y);
-  y++;
-  if (y==32) y=0;
 
   digitalWrite(CS, HIGH);
   #ifdef __SPI__
@@ -108,12 +105,15 @@ void loop() {
   #endif
   writeWord(0b11111010); // synchro 11111 RW RS 0
   for (int x=0;x<32;x++)
-    write(0b00110011);
+      write(x);
   #ifdef __SPI__
   SPI.endTransaction();
   #endif
   digitalWrite(CS, LOW);
   delayMicroseconds(DELAI);
+
+    y++;
+    if (y>31) y=0;
 
   //delay(1000);
 
